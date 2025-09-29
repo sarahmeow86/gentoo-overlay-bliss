@@ -4,7 +4,6 @@
 EAPI=8
 
 DISTUTILS_USE_PEP517=poetry
-DISTUTILS_SINGLE_IMPL=1
 PYTHON_COMPAT=( python3_{11,12,13} )
 
 inherit distutils-r1
@@ -48,12 +47,13 @@ PATCHES=(
 
 distutils_enable_tests pytest
 
-python_prepare_all() {
-	# Fix configuration paths
+src_prepare() {
 	default
+}
 
-	# Move files to system locations
-	cp "${S}/files/default-settings.json" "${S}/files/init" "${S}/usr/share/bliss-initramfs/" || die
+src_install() {
+	distutils-r1_src_install
+	dodoc README.md USAGE.md
 }
 	newins "${S}/files/default-settings.json" settings.json
 
