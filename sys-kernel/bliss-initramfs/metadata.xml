@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+    <maintainer type="person">
+        <email>saretta1986@proton.me</email>
+        <name>Sarah Meow</name>
+    </maintainer>
+    <upstream>
+        <remote-id type="github">sarahmeow86/bliss-initramfs</remote-id>
+    </upstream>
+    <use>
+        <flag name="nvme">Install NVMe support via sys-block/nvme-cli</flag>
+    </use>
+    <longdescription>
+        Bliss Initramfs is a tool for generating an initramfs image with all files
+        needed to boot a Gentoo Linux system installed on Encrypted/OpenZFS.
+        This program is designed as a simple alternative to genkernel for this use case.
+    </longdescription>
+</pkgmetadata>
