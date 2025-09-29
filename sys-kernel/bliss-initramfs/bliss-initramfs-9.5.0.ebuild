@@ -48,24 +48,12 @@ PATCHES=(
 
 distutils_enable_tests pytest
 
-pkg_setup() {
-	# Required for using distutils-r1 with DISTUTILS_SINGLE_IMPL
-	python-r1_pkg_setup
-}
-
-src_prepare() {
+python_prepare_all() {
+	# Fix configuration paths
 	default
-}
 
-src_install() {
-	distutils-r1_src_install
-	
-	mkdir -p "${ED}/etc/bliss-initramfs" "${ED}/usr/share/bliss-initramfs"
-	cp "${S}/files/default-settings.json" "${ED}/etc/bliss-initramfs/settings.json" || die
-	cp "${S}/files/default-settings.json" "${ED}/usr/share/bliss-initramfs/default-settings.json" || die
-	cp "${S}/files/init" "${ED}/usr/share/bliss-initramfs/init" || die
-
-	dodoc README.md USAGE.md
+	# Move files to system locations
+	cp "${S}/files/default-settings.json" "${S}/files/init" "${S}/usr/share/bliss-initramfs/" || die
 }
 	newins "${S}/files/default-settings.json" settings.json
 
