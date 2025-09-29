@@ -6,7 +6,11 @@ EAPI=8
 DISTUTILS_USE_PEP517=poetry
 PYTHON_COMPAT=( python3_{11,12,13} )
 
-inherit distutils-r1 python-single-r1
+inherit distutils-r1
+
+pkg_setup() {
+    python_setup
+}
 
 DESCRIPTION="Generates an initramfs image with files needed to boot Gentoo Linux on OpenZFS"
 HOMEPAGE="https://github.com/sarahmeow86/bliss-initramfs"
@@ -15,8 +19,8 @@ SRC_URI="https://github.com/sarahmeow86/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.
 LICENSE="BSD-2"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="+python_single_target_python3_11 python_single_target_python3_12 python_single_target_python3_13 nvme"
-REQUIRED_USE="^^ ( python_single_target_python3_11 python_single_target_python3_12 python_single_target_python3_13 )"
+IUSE="nvme test"
+RESTRICT="!test? ( test )"
 
 RDEPEND="
 	app-arch/cpio
