@@ -1,0 +1,11 @@
+--- a/pkg/libs/Variables.py
++++ b/pkg/libs/Variables.py
+@@ -3,7 +3,7 @@ import os
+ # Configuration File Locations
+ settingsDirectory = "/etc/bliss-initramfs"
+ settingsFile = settingsDirectory + "/settings.json"
+-defaultSettingsFile = os.path.dirname(os.path.realpath(__file__)) + "/../../files/default-settings.json"
++defaultSettingsFile = "/usr/share/bliss-initramfs/default-settings.json"
+ 
+ # Program Variables
+ home = os.getcwd()

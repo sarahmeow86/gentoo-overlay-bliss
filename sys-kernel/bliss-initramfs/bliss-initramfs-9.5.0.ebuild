@@ -15,7 +15,8 @@ SRC_URI="https://github.com/sarahmeow86/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.
 LICENSE="BSD-2"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="nvme"
+IUSE="+python_single_target_python3_11 python_single_target_python3_12 python_single_target_python3_13 nvme"
+REQUIRED_USE="^^ ( python_single_target_python3_11 python_single_target_python3_12 python_single_target_python3_13 )"
 
 RDEPEND="
 	app-arch/cpio
@@ -32,6 +33,7 @@ RDEPEND="
 		sys-apps/systemd
 	)
 	nvme? ( sys-block/nvme-cli )
+	${PYTHON_DEPS}
 "
 
 DEPEND="${RDEPEND}"
@@ -39,7 +41,15 @@ BDEPEND="
 	>=dev-python/poetry-core-1.0.0[${PYTHON_USEDEP}]
 "
 
+PATCHES=(
+	"${FILESDIR}"/${P}-settings-path.patch
+)
+
 distutils_enable_tests pytest
+
+pkg_setup() {
+	python-single-r1_pkg_setup
+}
 
 src_prepare() {
 	default
@@ -52,8 +62,14 @@ src_install() {
 	distutils-r1_src_install
 
 	# Install default settings file
-	insinto /etc/${PN}
+	insinto /usr/share/${PN}
 	doins "${S}/files/default-settings.json"
+	insinto /etc/${PN}
+	newins "${S}/files/default-settings.json" settings.json
+
+	# Make the script executable
+	python_fix_shebang "${ED}"/usr/bin/mkinitrd.py
+	fperms +x /usr/bin/mkinitrd.py
 }
 
 pkg_postinst() {
