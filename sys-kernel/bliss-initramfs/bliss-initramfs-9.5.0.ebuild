@@ -6,7 +6,7 @@ EAPI=8
 DISTUTILS_USE_PEP517=poetry
 PYTHON_COMPAT=( python3_{11,12,13} )
 
-inherit distutils-r1
+inherit distutils-r1 python-single-r1
 
 DESCRIPTION="Generates an initramfs image with files needed to boot Gentoo Linux on OpenZFS"
 HOMEPAGE="https://github.com/sarahmeow86/bliss-initramfs"
