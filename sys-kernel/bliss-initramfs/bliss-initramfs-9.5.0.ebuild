@@ -52,8 +52,8 @@ src_prepare() {
 	default
 }
 
-src_install() {
-	distutils-r1_src_install
+python_install_all() {
+	distutils-r1_python_install_all
 
 	insinto /usr/share/bliss-initramfs
 	doins "${S}/files/default-settings.json"
