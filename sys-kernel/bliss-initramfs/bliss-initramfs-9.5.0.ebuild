@@ -8,11 +8,6 @@ PYTHON_COMPAT=( python3_{11,12,13} )
 
 inherit distutils-r1
 
-pkg_setup() {
-    # No pkg_setup needed for distutils-r1
-    :
-}
-
 DESCRIPTION="Generates an initramfs image with files needed to boot Gentoo Linux on OpenZFS"
 HOMEPAGE="https://github.com/sarahmeow86/bliss-initramfs"
 SRC_URI="https://github.com/sarahmeow86/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
@@ -52,34 +47,19 @@ PATCHES=(
 
 distutils_enable_tests pytest
 
-pkg_setup() {
-	python-single-r1_pkg_setup
-}
-
 src_prepare() {
 	default
 }
 
-src_install() {
-	distutils-r1_src_install
+python_install_all() {
+	distutils-r1_python_install_all
 
 	insinto /usr/share/bliss-initramfs
 	doins files/default-settings.json
 	doins files/init
 
 	dodoc README.md USAGE.md
-	# Ensure the default settings file is installed
-	mkdir -p "${S}/files" || die
-	cp "${S}/files/default-settings.json" "${S}/files/" || die
 }
-
-src_install() {
-	distutils-r1_src_install
-
-	# Install default settings file
-	insinto /usr/share/${PN}
-	doins "${S}/files/default-settings.json"
-	insinto /etc/${PN}
 	newins "${S}/files/default-settings.json" settings.json
 
 	# Make the script executable
