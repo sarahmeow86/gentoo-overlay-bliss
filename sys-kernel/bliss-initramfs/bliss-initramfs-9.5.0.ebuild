@@ -9,7 +9,8 @@ PYTHON_COMPAT=( python3_{11,12,13} )
 inherit distutils-r1
 
 pkg_setup() {
-    python_setup
+    # No pkg_setup needed for distutils-r1
+    :
 }
 
 DESCRIPTION="Generates an initramfs image with files needed to boot Gentoo Linux on OpenZFS"
@@ -57,6 +58,16 @@ pkg_setup() {
 
 src_prepare() {
 	default
+}
+
+src_install() {
+	distutils-r1_src_install
+
+	insinto /usr/share/bliss-initramfs
+	doins files/default-settings.json
+	doins files/init
+
+	dodoc README.md USAGE.md
 	# Ensure the default settings file is installed
 	mkdir -p "${S}/files" || die
 	cp "${S}/files/default-settings.json" "${S}/files/" || die

@@ -1,11 +1,11 @@
 --- a/pkg/libs/Variables.py
 +++ b/pkg/libs/Variables.py
-@@ -3,7 +3,7 @@ import os
- # Configuration File Locations
- settingsDirectory = "/etc/bliss-initramfs"
- settingsFile = settingsDirectory + "/settings.json"
--defaultSettingsFile = os.path.dirname(os.path.realpath(__file__)) + "/../../files/default-settings.json"
-+defaultSettingsFile = "/usr/share/bliss-initramfs/default-settings.json"
+@@ -41,7 +41,7 @@ temp = home + "/bi-" + rstring
+ phome = os.path.dirname(os.path.realpath(sys.argv[0]))
  
- # Program Variables
- home = os.getcwd()
+ # Files Directory
+-filesDirectory = phome + "/files"
++filesDirectory = "/usr/share/bliss-initramfs"
+ 
+ # CPU Architecture
+ arch = subprocess.check_output(["uname", "-m"], universal_newlines=True).strip()
